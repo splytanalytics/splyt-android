@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:amazon="http://schemas.amazon.com/apk/res/android"
+    package="com.rsb.bubblepop"
+    android:versionCode="1"
+    android:versionName="1.0">
+
+    <uses-sdk
+        android:minSdkVersion="10"
+        android:targetSdkVersion="21"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
+    <!-- ADM uses WAKE_LOCK to keep the processor from sleeping when a message is received. -->
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <!-- This permission allows your app access to receive push notifications from ADM/GCM. -->
+    <uses-permission android:name="com.amazon.device.messaging.permission.RECEIVE"/>
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+
+    <!-- This permission ensures that no other application can intercept your ADM/GCM messages. -->
+    <permission android:name="com.rsb.bubblepop.permission.RECEIVE_ADM_MESSAGE" android:protectionLevel="signature"/>
+    <uses-permission android:name="com.rsb.bubblepop.permission.RECEIVE_ADM_MESSAGE"/>
+
+    <permission android:name="com.rsb.bubblepop.permission.C2D_MESSAGE" android:protectionLevel="signature"/>
+    <uses-permission android:name="com.rsb.bubblepop.permission.C2D_MESSAGE"/>
+
+    <!-- This permission allows us to detect when the user performs a system update.
+         Note that this is not required for push notifications to work, but it does guarantee that notifications will still
+         be sent to the device after a system update, even if the user doesn't launch the app.
+    -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme">
+        <service android:name=".HeartbeatService" android:exported="false"/>
+        <activity
+            android:name="com.rsb.bubblepop.MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <receiver
+            android:name="com.rsb.splyt.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND">
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
+                <category android:name="com.rsb.bubblepop"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.rsb.splyt.GcmUpdateReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+                <data android:path="com.rsb.bubblepop" android:scheme="package"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <service android:name="com.rsb.splyt.GcmIntentService"/>
+
+        <!-- You must explicitly enable ADM and declare whether your app cannot work withoutADM (android:required="true") or can work without ADM (android:required="false").
+             If you specify android:required="false", your app must degrade gracefully if ADM is unavailable. -->
+        <amazon:enable-feature android:name="com.amazon.device.messaging" android:required="false"/>
+
+        <!-- This permission ensures that only ADM can send your app registration broadcasts. -->
+        <receiver android:name="com.rsb.splyt.ADMMessageHandler$Receiver" android:permission="com.amazon.device.messaging.permission.SEND">
+            <!-- To interact with ADM, your app must listen for the following intents. -->
+            <intent-filter>
+                <action android:name="com.amazon.device.messaging.intent.REGISTRATION"/>
+                <action android:name="com.amazon.device.messaging.intent.RECEIVE"/>
+                <category android:name="com.rsb.bubblepop"/>
+            </intent-filter>
+        </receiver>
+        <service android:name="com.rsb.splyt.ADMMessageHandler" android:exported="false"/>
+    </application>
+
+</manifest>

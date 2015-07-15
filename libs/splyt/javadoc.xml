@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="javadoc">
+    <target name="javadoc">
+        <javadoc access="public" author="true" version="true" destdir="doc/html" charset="UTF-8"
+            classpath="/usr/local/opt/android-sdk/platforms/android-21/android.jar;./libs/gson-2.2.3-custom.jar;./libs/android-support-v4.jar;../google-play-services_lib/libs/google-play-services.jar;../ADM_lib/libs/amazon-device-messaging-1.0.1.jar">
+            <fileset dir="src">
+                <exclude name="com/rsb/splyt/ADMMessageHandler.java"/>
+                <exclude name="com/rsb/splyt/GcmBroadcastReceiver.java"/>
+                <exclude name="com/rsb/splyt/GcmIntentService.java"/>
+            </fileset>
+            <header>
+                <![CDATA[
+                    <a href="http://splyt.com">
+                        <img src="{@docRoot}/../images/SplytSDKLogoHeader.png"/>
+                    </a>
+                ]]>
+            </header>
+            <footer>
+                <![CDATA[
+                    <a href="http://splyt.com">
+                        <img src="{@docRoot}/../images/SplytSDKLogoFooter.png"/>
+                    </a>
+                ]]>
+            </footer>
+            <link offline="true" href="http://d.android.com/reference" packagelistLoc="/usr/local/opt/android-sdk/docs/reference"/>
+        </javadoc>
+    </target>
+</project>

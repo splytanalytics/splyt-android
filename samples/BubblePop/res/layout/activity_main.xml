@@ -1,0 +1,88 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/uppersection"
+        android:background="@color/background"
+        android:paddingTop="2dp" 
+        android:paddingRight="2dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.rsb.bubblepop.PurchaseButton
+            android:id="@+id/purchasebutton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="12sp"/>
+
+        <!-- Empty space -->
+
+        <View 
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5"/>
+        
+        <com.rsb.bubblepop.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textOn="Logout"
+            android:textOff="Login"
+            android:textSize="12sp" />
+
+        <com.rsb.bubblepop.BalanceBox
+            android:id="@+id/balancebox"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="left|center_vertical"
+            android:textSize="12sp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="6dp"
+            android:background="#0080FF"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lowersection"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Empty space -->
+        <View 
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+        <Button
+            android:id="@+id/startbutton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="6dp"
+            android:textSize="12sp"
+            android:onClick="onStartButtonClick"
+            android:text="@string/start_game"/>
+
+        <!-- Empty space -->
+        <View 
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <com.rsb.bubblepop.GameBoard
+        android:id="@+id/gameboardsection"
+        android:layout_above="@id/lowersection"
+        android:layout_below="@id/uppersection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</RelativeLayout>

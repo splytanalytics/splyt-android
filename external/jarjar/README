@@ -1,0 +1,3 @@
+We use Jar Jar Links to embed 3rd party libraries with the Splyt Android sdk and avoid potential dependency problems.
+
+See http://code.google.com/p/jarjar/

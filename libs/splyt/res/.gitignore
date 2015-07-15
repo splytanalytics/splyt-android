@@ -1,0 +1,3 @@
+# We want a res directory to keep eclipse from complaining during the build, but we have no resources.
+# Hence, this directory is empty.  And since git doesn't support this, this file was created.
+# See https://git.wiki.kernel.org/index.php/GitFaq#Can_I_add_empty_directories.3F

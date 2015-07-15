@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <!-- Note that this project is not meant to be loaded directly but rather through the build.xml file-->
+
+    <!--
+        Import the javadoc target
+    -->
+    <import file="javadoc.xml"/>
+
+    <!--
+        When building from the command line, we don't want the output to be classes.jar.
+        Instead, we want it to match what is output when building in eclipse, so we override that name here.
+        See http://code.google.com/p/android/issues/detail?id=37601
+    -->
+    <target name="-set-outfilename">
+        <property name="out.library.jar.file" location="${out.absolute.dir}/${ant.project.name}.jar"/>
+    </target>
+
+    <!-- Set the output file name before compilation -->
+    <target name="-pre-compile" depends="-set-outfilename"/>
+
+    <!--
+        Combine splyt jar with the customized gson jar so that we can distribute just one core jar file.
+        Then, copy it to the libs folder of any sample apps which depend on it
+    -->
+    <target name="-post-build" depends="-set-outfilename, javadoc, -setup">
+        <!-- Note that this was taken from the -compile target (when the project is a library) in the SDK's tools/ant/build.xml file -->
+        <propertybyreplace name="project.app.package.path" input="${project.app.package}" replace="." with="/"/>
+        <jar destfile="${out.library.jar.file}">
+            <fileset dir="${out.classes.absolute.dir}"
+                    includes="**/*.class"
+                    excludes="${project.app.package.path}/R.class ${project.app.package.path}/R$*.class ${project.app.package.path}/BuildConfig.class"/>
+            <fileset dir="${source.absolute.dir}" excludes="**/*.java ${android.package.excludes}"/>
+            <zipfileset src="libs/gson-2.2.3-custom.jar"/>
+        </jar>
+        <copy file="${out.library.jar.file}" todir="../../samples/BubblePop/libs"/>
+
+        <!-- Copy the docs over as well -->
+        <sync todir="../../samples/BubblePop/libs/docs/${ant.project.name}">
+            <fileset dir="doc" includes="**"/>  
+        </sync>
+    </target>
+    
+    <!-- target that allows us to perform only the post-build step -->
+    <target name="do-post-build" depends="-post-build" description="Repackages the output jar and copies it to projects which depend on it."/>
+</project>

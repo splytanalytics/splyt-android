@@ -1,0 +1,20 @@
+How to build the Splyt Android SDK
+
+- Install Android SDK
+    - brew install android-sdk
+- Install Amazon SDK
+    - See https://developer.amazon.com/public/resources/development-tools/ide-tools/tech-docs/01-setting-up-your-development-environment
+- Make sure the various local.properties files point at the right Android SDK path
+- Make sure libs/ADM_lib/project.properties points at a valid target
+    - Should be a target that includes ADM ? ("com.amazon.device.messaging (adm.jar)"
+    - To see your installed targets, run: android list targets
+- Run
+    - cd ~/rsb/splyt-sdk/android/build
+    - ant -buildfile build.xml
+
+
+> When releasing
+Bump the SDK version found in Splyt.java, look for:
+    private String mSDKVersion = "5.0.0";
+In general, see:
+    https://sites.google.com/a/rowshambow.com/main/analytics/splyt-sdks-1

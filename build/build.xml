@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="splyt-android" xmlns:unless="ant:unless" basedir="./.." default="build-package">
+
+    <!-- bring in ant contrib
+    http://sourceforge.net/projects/ant-contrib/files/ant-contrib/ant-contrib-0.6/ant-contrib-0.6-bin.zip/download -->
+    <taskdef resource="net/sf/antcontrib/antcontrib.properties">
+        <classpath>
+            <pathelement location="${basedir}/../common/build/tasks/ant-contrib-0.6.jar"/>
+        </classpath>
+    </taskdef>
+
+    <!--
+    COMMON PROPERTIES -->
+    <property name="package.location" value="${basedir}/bin" unless:set="package.location"/>
+    <property name="doxygen.location" value="/usr/local/bin" unless:set="doxygen.location"/>
+    <property name="doxyfile.location" value="${basedir}/doc"/>
+
+    <!--
+    BUILD-PACKAGE
+    Default package target which clean the environment, generates docs, packages
+    everything up and puts it in the packages folder -->
+    <target name="build-package" depends="check-installed-software,
+        current-git-sha1,
+        clean-package,
+        build-lib,
+        generate-docs,
+        assemble-parts,
+        create-archive" />
+
+    <!--
+    CHECK-INSTALLS
+    Checks to see if necessary software can be detected and either installs it or prompts the user to do so. -->
+    <target name="check-installed-software">
+        <!-- Check Doxygen -->
+        <available file="${doxygen.location}" property="doxygen.installed"/>
+        <if>
+            <equals arg1="${doxygen.installed}" arg2="true"/>
+            <then>
+                <echo message="Doxygen is installed!!!"/>
+            </then>
+            <else>
+                <fail message="You do not seem to have Doxygen installed at ${doxygen.location}  Please install it with: brew install doxygen"/>
+            </else>
+        </if>
+        <!-- the build.xml for Android libs checks for the SDK, so we don't have to do so here -->
+    </target>
+
+    <!--
+    CURRENT-GIT-SHA
+    Queries the git repository for the shortened SHA-1 of the repository and creates property out
+    of it called current-git-sha1. -->
+    <target name="current-git-sha1">
+        <exec executable="git" dir="${basedir}" outputproperty="current-git-sha1">
+            <arg value="log"/>
+            <arg value="--pretty=format:%h"/>
+            <arg value="-n 1"/>
+        </exec>
+        <echo message="Current (shortened) repository SHA-1: ${current-git-sha1}"/>
+    </target>
+
+    <!--
+    CLEAN-PACKAGE
+    Removes the directory that we are about to create if it exists -->
+    <target name="clean-package" depends="current-git-sha1">
+        <!-- create a few properties that we need -->
+        <property name="package.name" value="${ant.project.name}-${current-git-sha1}"/>
+        <property name="package.folder" value="${package.location}/${package.name}"/>
+
+        <!-- nuke the package destination -->
+        <delete dir="${package.folder}" failOnError="false" includeEmptyDirs="true"/>
+        <mkdir dir="${package.folder}"/>
+    </target>
+
+    <!--
+    BUILD-LIB
+    Builds the library by invoking an ant command line build -->
+    <target name="build-lib">
+        <ant antfile="${basedir}/libs/splyt/build.xml" dir="${basedir}/libs/splyt" inheritAll="false" inheritRefs="false">
+             <target name="clean"/>
+             <target name="release"/>
+        </ant>
+    </target>
+
+    <!--
+    GENERATE-DOCS
+    Generate documentation using Doxygen -->
+    <target name="generate-docs" depends="check-installed-software">
+        <delete dir="${doxyfile.location}/html" failOnError="false"/>
+        <exec dir="${doxyfile.location}" executable="${doxygen.location}/doxygen">
+            <arg value="${doxyfile.location}/splyt.dox"/>
+        </exec>
+    </target>
+
+    <!--
+    ASSEMBLE-PARTS
+    Copy all parts of the SDK as checked in to their appropriate customer facing locations -->
+    <target name="assemble-parts" depends="generate-docs, clean-package">
+        <!-- readme -->
+        <copy file="${basedir}/readme.md" todir="${package.folder}"/>
+
+        <!-- documentation -->
+        <copy todir="${package.folder}/doc">
+            <fileset dir="${doxyfile.location}/html"/>
+        </copy>
+
+        <!-- framework -->
+        <copy todir="${package.folder}/libs">
+            <fileset file="${basedir}/libs/splyt/bin/splyt-android.jar" />
+        </copy>
+        <!-- include javadocs -->
+        <copy todir="${package.folder}/libs/docs/splyt-android">
+            <fileset file="${basedir}/libs/splyt/doc/**" />
+        </copy>
+        <!-- .properties file points to javadocs for Eclipse code completion support -->
+        <copy todir="${package.folder}/libs">
+            <fileset file="${basedir}/samples/BubblePop/libs/splyt-android.jar.properties" />
+        </copy>
+
+        <!-- sample -->
+        <copy todir="${package.folder}/samples">
+            <fileset dir="${basedir}/samples">
+                <include name="**/**" />
+                <exclude name="**/bin/**" />
+                <exclude name="**/gen/**" />
+                <exclude name="BubblePop/assets/api_key*.txt" />
+            </fileset>
+        </copy>
+
+        <!-- put in placeholder for API key instead of the actual one -->
+        <copy file="${basedir}/samples/BubblePop/assets/api_key_placeholder.txt" tofile="${package.folder}/samples/BubblePop/assets/api_key.txt"/>
+
+    </target>
+
+    <!--
+    CREATE-ARCHIVE
+    Zip up the package -->
+    <target name="create-archive" depends="assemble-parts">
+        <exec dir="${package.folder}/.." executable="zip">
+            <arg value="-r"/>
+            <arg value="-m"/>
+            <arg value="-q"/>
+            <arg value="${package.name}.zip"/>
+            <arg value="${package.name}"/>
+        </exec>
+    </target>
+</project>
