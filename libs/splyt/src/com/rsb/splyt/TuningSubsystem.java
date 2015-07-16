@@ -22,7 +22,7 @@ import com.rsb.splyt.HttpRequest.RequestResult;
 /**
  * <p>Tuning Subsystem</p>
  *
- * @author Copyright 2013 Row Sham Bow, Inc.
+ * @author Copyright 2015 Knetik, Inc.
  * @version 1.0
  */
 class TuningSubsystem
@@ -37,7 +37,7 @@ class TuningSubsystem
 
     /**
      * Performs required initialization for the tuning subsystem
-     * 
+     *
      * @param context Application context to use for caching tuning variable information
      */
     static void init(Context context, SplytListener listener)
@@ -68,11 +68,11 @@ class TuningSubsystem
 
         listener.onComplete(SplytError.Success);
     }
-    
+
     static void refresh(SplytListener listener)
     {
         SplytError ret = SplytError.Success;
-        
+
         if ((CoreSubsystem.InitializationState.Initialized == CoreSubsystem.getInitializationState()) && (null != sContext))
         {
             String url = CoreSubsystem.getHost() + "/isos-personalization/ws/interface/tuner_refresh" + CoreSubsystem.getQueryParms();
@@ -95,7 +95,7 @@ class TuningSubsystem
                     }
                 }
             };
-            
+
             try
             {
                 // Create an (async) request to retrieve a device Id.  The callback will be triggered when the request is completed
@@ -145,7 +145,7 @@ class TuningSubsystem
             entityType = SplytConstants.ENTITY_TYPE_USER;
             entityId = userId;
         }
-        
+
         // Assume we're going to return the defaultValue
         Object retVal = defaultValue;
 
@@ -172,15 +172,15 @@ class TuningSubsystem
             outputStream.flush();
             outputStream.close();
         }
-        catch (Exception ex) 
-        { 
+        catch (Exception ex)
+        {
             Util.logError("Failed to save tuning vars to cache", ex);
         }
     }
 
     // this can't be declared INSIDE parseRefreshResponse (as per http://stackoverflow.com/questions/10927699/simplest-gson-fromjson-example-fails)
     //  but we'll at least put the code as close as possible
-    private class refreshResponse 
+    private class refreshResponse
     {
         class tuningBundle
         {
@@ -196,7 +196,7 @@ class TuningSubsystem
             String description;
             tuningBundle data;
         }
-        
+
         ssfBundle deviceTuning;
         ssfBundle userTuning;
     }
@@ -204,11 +204,11 @@ class TuningSubsystem
     private static SplytError parseRefreshResponse(RequestResult result)
     {
         SplytError error = result.error;
-        
+
         if(SplytError.Success == error)
         {
             TuningUpdater updater = new Updater();
-            
+
             try
             {
                 JsonParser parser = new JsonParser();
@@ -232,7 +232,7 @@ class TuningSubsystem
                             Util.logError(SplytError.fromInt(data.deviceTuning.error).toString() + "(" + data.deviceTuning.description + ")");
                         }
                     }
-                    
+
                     if (null != data.userTuning && null != data.userTuning.data && null != data.userTuning.data.value)
                     {
                         for (Map.Entry<String, Object> entry : data.userTuning.data.value.entrySet()) {
@@ -284,23 +284,23 @@ class TuningSubsystem
     public static class Updater implements TuningUpdater
     {
         private boolean mDirty = false;
-        
+
         @Override
         public void onUpdate(String type, String id, Map<String, Object> values) {
-            
+
             sCacheVars.updateEntity(type, id, values);
-            
+
             mDirty = true;
         }
-    
+
         @Override
         public void onClear(String type, String id) {
-            
+
             sCacheVars.removeEntity(type, id);
-            
+
             mDirty = true;
         }
-        
+
         @Override
         public void commit()
         {
@@ -324,7 +324,7 @@ class TuningSubsystem
             {
                 mStorage.put(type, new HashMap<String, Object>());
             }
-            
+
             Map<String, Object> typeStorage = mStorage.get(type);
             typeStorage.put(id, values);
         }
@@ -335,7 +335,7 @@ class TuningSubsystem
             {
                 mStorage.put(type, new HashMap<String, Object>());
             }
-            
+
             Map<String, Object> typeStorage = mStorage.get(type);
             if(typeStorage.containsKey(id))
             {

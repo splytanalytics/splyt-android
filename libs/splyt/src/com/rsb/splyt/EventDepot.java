@@ -34,7 +34,7 @@ import com.rsb.gson.JsonPrimitive;
  * - In cases where the network connection is either lost or "spotty", the frequency of the attempts to send the events is throttled, again to minimize resource usage
  * </p>
  *
- * @author Copyright 2013 Row Sham Bow, Inc.
+ * @author Copyright 2015 Knetik, Inc.
  */
 class EventDepot
 {

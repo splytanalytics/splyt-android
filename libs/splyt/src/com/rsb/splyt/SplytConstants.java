@@ -3,7 +3,7 @@ package com.rsb.splyt;
 /**
  * Public SPLYT Constants
  *
- * @author Copyright 2013 Row Sham Bow, Inc.
+ * @author Copyright 2015 Knetik, Inc.
  * @version 1.0
  */
 public class SplytConstants
@@ -14,8 +14,8 @@ public class SplytConstants
     public static final int DEFAULT_REQUEST_TIMEOUT = 3000; // in ms
 
     /**
-     * The string `success`, which represents successful completion of a 
-     * {@link Splyt.Instrumentation.Transaction}.  If no result is specified when ending a 
+     * The string `success`, which represents successful completion of a
+     * {@link Splyt.Instrumentation.Transaction}.  If no result is specified when ending a
      * {@link Splyt.Instrumentation.Transaction}, this is used as the default.
      */
     public static final String TXN_SUCCESS = "success";
@@ -29,7 +29,7 @@ public class SplytConstants
     /**
      * A string that indicates than an entity represents a user. Clients should not normally need to make direct use
      * of this constant when using a SPLYT SDK.
-     * 
+     *
      * @see Splyt.Core.EntityInfo
      */
     public static final String ENTITY_TYPE_USER = "USER";
@@ -37,23 +37,23 @@ public class SplytConstants
     /**
      * A string that indicates than an entity represents a device. Clients should not normally need to make direct use
      * of this constant when using a SPLYT SDK.
-     * 
+     *
      * @see Splyt.Core.EntityInfo
      */
     public static final String ENTITY_TYPE_DEVICE = "DEVICE";
 
     /**
-     * Indicates that a {@link Splyt.Instrumentation.Transaction} will be kept "open" only by direct updates to the 
+     * Indicates that a {@link Splyt.Instrumentation.Transaction} will be kept "open" only by direct updates to the
      * transaction itself.  If no timeout mode is specified, this is the default.
-     * 
+     *
      * @see Splyt.Core.EntityInfo
      */
     public static final String TIMEOUT_MODE_TRANSACTION = "TXN";
 
     /**
-     * The transaction will be kept "open" by updates to any transaction for the current device or user. 
+     * The transaction will be kept "open" by updates to any transaction for the current device or user.
      * <b>Note</b>: this is reserved for future use, and is not yet supported.
-     * 
+     *
      * @see Splyt.Core.EntityInfo
      */
     public static final String TIMEOUT_MODE_ANY = "ANY";

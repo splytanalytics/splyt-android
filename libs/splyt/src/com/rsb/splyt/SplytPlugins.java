@@ -14,14 +14,14 @@ import java.util.Map;
  *    SplytPlugins.Session.Transaction().begin();
  *    // ...
  *    SplytPlugins.Session.Transaction().end();
- *    
+ *
  *    SplytPlugins.Purchase.Transaction splytPurchase = SplytPlugins.Purchase.Transaction();
  *    splytPurchase.setPrice("usd", 1.99);
  *    splytPurchase.setItemName("Value Pack");
  *    splytPurchase.beginAndEnd();
  * </pre>
  *
- * @author Copyright 2013 Row Sham Bow, Inc.
+ * @author Copyright 2015 Knetik, Inc.
  */
 public class SplytPlugins
 {
@@ -42,26 +42,26 @@ public class SplytPlugins
         private static final String CATEGORY_NAME = "session";
         private static final Double DEFAULT_TIMEOUT = Double.valueOf(10 * 86400);   // 10 days
         private static final String DEFAULT_TIMEOUT_MODE = SplytConstants.TIMEOUT_MODE_ANY;
-        
+
         /**
-         * A light wrapper around {@link Splyt.Instrumentation.Transaction} that makes it easy to report session 
+         * A light wrapper around {@link Splyt.Instrumentation.Transaction} that makes it easy to report session
          * activity in your app.
          */
         public static class Transaction extends TransactionBase<Transaction>
         {
             private Transaction() {
                 super(CATEGORY_NAME, null);
-                
+
                 mTimeoutMode = DEFAULT_TIMEOUT_MODE;
                 mTimeout = DEFAULT_TIMEOUT;
             }
-            
+
             /**
              * Report the beginning of a session.
              * <p>
-             * When beginning a session, any properties which have been set (see {@link Splyt.Instrumentation.Transaction#setProperty} and 
+             * When beginning a session, any properties which have been set (see {@link Splyt.Instrumentation.Transaction#setProperty} and
              * {@link Splyt.Instrumentation.Transaction#setProperties}) are also included with the data sent to SPLYT.
-             * 
+             *
              * @param  timeout      If SPLYT does not receive any updates to this session for a period longer than
              *                      the timeout interval specified, the session is considered to have timed out.
              */
@@ -97,7 +97,7 @@ public class SplytPlugins
     {
         private static final String CATEGORY_NAME = "purchase";
         private static final Double DEFAULT_TIMEOUT = Double.valueOf(60);   // 60 seconds
-        
+
         /**
          * A light wrapper around {@link Splyt.Instrumentation.Transaction} that makes it easy to report purchase
          * activity in your app.
@@ -129,33 +129,33 @@ public class SplytPlugins
             {
                 Map<String, Double> priceMap = new HashMap<String, Double>();
                 priceMap.put(Util.getValidCurrencyString(currency), price);
-                
+
                 mProperties.put("price", priceMap);
-                
+
                 return this;
-                
+
                 /* ONCE WE ADD LIST SUPPORT TO THE DATA COLLECTOR, SWITCH OUT THIS BLOCK
                 if(!mProperties.containsKey("price"))
                 {
                     mProperties.put("price", new ArrayList<Map<String, Object> >());
                 }
-                
+
                 @SuppressWarnings("unchecked")
                 List<Map<String, Object> > prices = (List<Map<String, Object> >)mProperties.get("price");
-                
+
                 Map<String, Object> pricePair = new HashMap<String, Object>(2);
                 pricePair.put("currency", currency);
                 pricePair.put("amount", price);
-                
+
                 prices.add(pricePair);
                 return this;
                 */
             }
 
             /**
-             * Reports an offer ID for the item being purchased. Useful for identifying promotions or other 
+             * Reports an offer ID for the item being purchased. Useful for identifying promotions or other
              * application-defined offers.
-             * 
+             *
              * @param  offerId  The offer ID.
              * @return This {@link SplytPlugins.Purchase.Transaction} instance.
              */
@@ -199,7 +199,7 @@ public class SplytPlugins
          *
          * @param  transactionId  A unique identifier for the created transaction. This is only required in situations
          *                        where multiple purchase transactions may exist for the same user at the same time.
-         * @return The created {@link SplytPlugins.Purchase.Transaction}.              
+         * @return The created {@link SplytPlugins.Purchase.Transaction}.
          */
         public static Transaction Transaction(String transactionId)
         {
@@ -208,8 +208,8 @@ public class SplytPlugins
 
         /**
          * Creates a new {@link SplytPlugins.Purchase.Transaction}.
-         * 
-         * @return The created {@link SplytPlugins.Purchase.Transaction}.              
+         *
+         * @return The created {@link SplytPlugins.Purchase.Transaction}.
          */
         public static Transaction Transaction()
         {
@@ -234,7 +234,7 @@ public class SplytPlugins
         public T setProperty(String key, Object value)
         {
             super.setProperty(key, value);
-            
+
             @SuppressWarnings("unchecked")
             T thisObj = (T) this;
             return thisObj;
@@ -247,7 +247,7 @@ public class SplytPlugins
         public T setProperties(Map<String, Object> properties)
         {
             super.setProperties(properties);
-            
+
             @SuppressWarnings("unchecked")
             T thisObj = (T) this;
             return thisObj;

@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * <p>Instrumentation Subsystem</p>
  *
- * @author Copyright 2013 Row Sham Bow, Inc.
+ * @author Copyright 2015 Knetik, Inc.
  * @version 1.0
  */
 class InstrumentationSubsystem

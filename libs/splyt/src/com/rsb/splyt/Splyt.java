@@ -17,7 +17,7 @@ import android.app.Activity;
  *
  * <p>Simplified instrumentation for common scenarios can be achieved by using {@link SplytPlugins SplytPlugins}.</p>
  *
- * @author Copyright 2013 Row Sham Bow, Inc.
+ * @author Copyright 2015 Knetik, Inc.
  * @version 1.0
  */
 public class Splyt

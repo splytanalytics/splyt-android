@@ -23,10 +23,10 @@ import com.rsb.splyt.HttpRequest.RequestResult;
  * <p>This is the core library for Splyt which supports sending data points to and retrieving tuning variables from
  * the system.  In addition to this base functionality, there are also some helper functions for setting whether
  * a user and/or device is new.</p>
- * 
+ *
  * <p>Additional Splyt functionality is added using plugins.  Plugins are added by including the appropriate
  * library (jar) files in addition to this core library.</p>
- * @author Copyright 2013 Row Sham Bow, Inc.
+ * @author Copyright 2015 Knetik, Inc.
  * @version 1.0
  */
 class CoreSubsystem
@@ -75,9 +75,9 @@ class CoreSubsystem
 
     /**
      * Initialize the Splyt system.
-     * 
+     *
      * @param context
-     * 
+     *
      * @return A {@link SplytError} value
      */
     static void init(Context context, String customerId, SplytListener listener, TuningUpdater tuningUpdater, String userEntityType, String userId, Map<String, Object> userProperties, String deviceEntityType, String deviceId, Map<String, Object> deviceProperties, int reqTimeout, String host, boolean logEnabled, String sdkName, String sdkVersion)
@@ -286,7 +286,7 @@ class CoreSubsystem
     /**
      * Pause the Splyt system.  This causes Splyt to save off its state to Internal Storage and stop checking for events to send.
      * One would typically call this in the onPause() of any activity that makes calls to Splyt.
-     * 
+     *
      * <p><b>Note:</b> One can still make calls to Splyt functions even when it's paused,
      * but doing so will trigger reads and writes to Internal Storage, so it is discouraged.</p>
      */
@@ -320,9 +320,9 @@ class CoreSubsystem
 
     /**
      * Helper class
-     * 
+     *
      * @internal
-     * 
+     *
      * NOTE: Using this builder pattern as opposed to a static method allows us to support "default parameters"
      */
     static class DataPointBuilder
@@ -415,7 +415,7 @@ class CoreSubsystem
      * Request listener used for both the {@link init} and {@link registerUser} calls.  The important distinction
      * between the server response from these calls is that only the init() call contains a deviceId.  This is also
      * why the shared preferences is not provided during the registerUser() call, as it is unneeded.
-     * 
+     *
      */
     private static class InitRequestListener implements RequestListener
     {
