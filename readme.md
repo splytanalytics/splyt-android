@@ -362,7 +362,8 @@ The following steps walk you through the process of running the BubblePop sample
 5. In the window that appears, navigate to the folder where you unzipped the SPLYT SDK for Android, select the `samples` folder, and click **Open**
    ![Import the Sample Project](doc/04-select_sample_dir_as_root.png)
 6. You should be returned to the previous window.  In the **Projects** box, you should see the **BubblePop** project was found by Eclipse and that it is checked.  Then click **Finish** to finish importing the project.
-   ![Finish Importing the BubblePop Project](doc/05-finish_import.png)
+
+![Finish Importing the BubblePop Project](doc/05-finish_import.png)
 
 <a name="productid"></a>
 ## Optional: Setting Your SPLYT Customer ID
@@ -376,7 +377,8 @@ If you *do* choose to set your customer ID to send BubblePop data to SPLYT, you 
 1. To use your specific customer ID, we'll need to change the code in BubblePop. To open the BubblePop code, go to Eclipse's Package Explorer. If it is not already open, you can open it by clicking the **Window | Show View | Package Explorer** menu item.
     ![Open the Package Explorer](doc/06-open_package_explorer.png)
 2. In the Package Explorer, expand the **BubblePop** project, then expand the `src` folder, and then expand the `com.rsb.bubblepop` folder.  Double-click the file `MainActivity.java` to open it in the editor.
-    ![Open MainActivity.java](doc/07_open-mainactivity_java.png)
+
+![Open MainActivity.java](doc/07_open-mainactivity_java.png)
 3. Find the string constant `SPLYT_CUSTOMER_ID` near the top of the file.  Change the value of that constant from `splyt-bubblepopunity-test` to your own customer ID.  Be sure to specify the customer ID for your test environment; it should end with the characters `-test` .
     ![Changing the SPLYT Customer ID for BubblePop](doc/08-change_product_id_eclipse.png)
 
@@ -388,7 +390,8 @@ If you *do* choose to set your customer ID to send BubblePop data to SPLYT, you 
 2. Make sure the **BubblePop** project is selected in the Package Explorer.  Then click the drop-down portion of the **Debug** button in the toolbar and then choose the **Debug As | Android Application** menu item.
    ![Debug as an Android Application](doc/09-debug_as_android_app.png)
 3. After BubblePop has been built successfully, it launches on the device or emulator that you have configured for debugging.
-   ![Launching BubblePop](doc/09-bubblepop_android_emu.png)
+
+![Launching BubblePop](doc/09-bubblepop_android_emu.png)
 
 ## Using the SDK Debugger Page to View your Data
 
@@ -401,7 +404,7 @@ As BubblePop runs on the device, it will send data to SPLYT about what is happen
     ![Opening the Tools Section of SPLYT](doc/splyt_choose_tools.png)
 4.  Once in the Tools section, choose the **Debugger** tool from the nav bar on the left.
 5.  As you continue to play the BubblePop game that you started on iOS during the steps above, the SDK Debugger page will periodically refresh and show data that the game is sending to SPLYT.  You can use this to verify that your app is able to talk to SPLYT, and that your instrumentation is correct.
-    ![SPLYT's SDK Debugger Page](doc/debugger_android.png)
+    ![SPLYT's SDK Debugger Page](doc/splyt_choose_debugger.png)
     Some tips on how to use this page:
     * All of SPLYT's SDKs send data using an underlying HTTP API.  The event names that appear on this page are based on the HTTP API names, and will differ from the actual SDK method names that you call from your code.
     * The page shows the 25 most recently received events.
