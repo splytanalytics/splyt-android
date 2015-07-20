@@ -379,6 +379,7 @@ If you *do* choose to set your customer ID to send BubblePop data to SPLYT, you 
 2. In the Package Explorer, expand the **BubblePop** project, then expand the `src` folder, and then expand the `com.rsb.bubblepop` folder.  Double-click the file `MainActivity.java` to open it in the editor.
 
 ![Open MainActivity.java](doc/07_open-mainactivity_java.png)
+
 3. Find the string constant `SPLYT_CUSTOMER_ID` near the top of the file.  Change the value of that constant from `splyt-bubblepopunity-test` to your own customer ID.  Be sure to specify the customer ID for your test environment; it should end with the characters `-test` .
     ![Changing the SPLYT Customer ID for BubblePop](doc/08-change_product_id_eclipse.png)
 
@@ -402,9 +403,8 @@ As BubblePop runs on the device, it will send data to SPLYT about what is happen
     ![Choosing BubblePop in SPLYT](doc/splyt_choose_product.png)
 3. Choose **Tools** from the nav bar on the top right:
     ![Opening the Tools Section of SPLYT](doc/splyt_choose_tools.png)
-4.  Once in the Tools section, choose the **Debugger** tool from the nav bar on the left.
+4.  Once in the Tools section, choose the **Debugger** tool from the nav bar on the left. ![SPLYT's SDK Debugger Page](doc/splyt_choose_debugger.png)
 5.  As you continue to play the BubblePop game that you started on iOS during the steps above, the SDK Debugger page will periodically refresh and show data that the game is sending to SPLYT.  You can use this to verify that your app is able to talk to SPLYT, and that your instrumentation is correct.
-    ![SPLYT's SDK Debugger Page](doc/splyt_choose_debugger.png)
     Some tips on how to use this page:
     * All of SPLYT's SDKs send data using an underlying HTTP API.  The event names that appear on this page are based on the HTTP API names, and will differ from the actual SDK method names that you call from your code.
     * The page shows the 25 most recently received events.
