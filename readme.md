@@ -377,9 +377,7 @@ If you *do* choose to set your customer ID to send BubblePop data to SPLYT, you 
 1. To use your specific customer ID, we'll need to change the code in BubblePop. To open the BubblePop code, go to Eclipse's Package Explorer. If it is not already open, you can open it by clicking the **Window | Show View | Package Explorer** menu item.
     ![Open the Package Explorer](doc/06-open_package_explorer.png)
 2. In the Package Explorer, expand the **BubblePop** project, then expand the `src` folder, and then expand the `com.rsb.bubblepop` folder.  Double-click the file `MainActivity.java` to open it in the editor.
-
-![Open MainActivity.java](doc/07_open-mainactivity_java.png)
-
+    ![Open MainActivity.java](doc/07_open-mainactivity_java.png)
 3. Find the string constant `SPLYT_CUSTOMER_ID` near the top of the file.  Change the value of that constant from `splyt-bubblepopunity-test` to your own customer ID.  Be sure to specify the customer ID for your test environment; it should end with the characters `-test` .
     ![Changing the SPLYT Customer ID for BubblePop](doc/08-change_product_id_eclipse.png)
 
